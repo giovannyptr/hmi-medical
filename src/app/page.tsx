@@ -1,12 +1,22 @@
 import HeroSection from "@/components/hero/HeroSection";
-import { getHero } from "@/sanity/queries";
+import FindUsSection from "@/components/find-us/FindUsSection";
+import MedicalSpecialtiesSection from "@/components/specialties/MedicalSpecialtiesSection";
+import SpecialistCareSection from "@/components/specialists/SpecialistCareSection";
+import InsightsSection from "@/components/insights/InsightsSection";
+import CorporateEnquirySection from "@/components/corporate/CorporateEnquirySection";
+import { getNews } from "@/sanity/queries";
 
 export default async function Home() {
-  const hero = await getHero().catch(() => null);
+  const news = await getNews();
 
   return (
     <main>
-      <HeroSection data={hero ?? undefined} />
+      <HeroSection />
+      <FindUsSection />
+      <MedicalSpecialtiesSection />
+      <SpecialistCareSection />
+      <InsightsSection news={news} />
+      <CorporateEnquirySection />
     </main>
   );
 }

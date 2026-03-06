@@ -30,6 +30,17 @@ export const doctor = defineType({
       options: { hotspot: true },
     }),
     defineField({
+      name: "clinic",
+      title: "Clinic / Location",
+      type: "string",
+    }),
+    defineField({
+      name: "availability",
+      title: "Availability",
+      type: "string",
+      description: 'e.g. "Walk-in Only", "By Appointment", "Walk-in & Appointment"',
+    }),
+    defineField({
       name: "email",
       title: "Email",
       type: "email",

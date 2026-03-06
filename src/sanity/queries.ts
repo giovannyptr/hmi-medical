@@ -10,7 +10,9 @@ export async function getDoctors() {
     name,
     specialty,
     bio,
-    image
+    clinic,
+    availability,
+    "imageUrl": image.asset->url
   }`);
 }
 
@@ -27,9 +29,9 @@ export async function getNews() {
   return client.fetch(`*[_type == "news"] | order(publishedAt desc) {
     _id,
     title,
-    slug,
+    "slug": slug.current,
     excerpt,
     publishedAt,
-    image
+    "imageUrl": image.asset->url
   }`);
 }

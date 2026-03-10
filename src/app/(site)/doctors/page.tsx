@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import Container from "@/components/ui/Container";
 import { getDoctors } from "@/sanity/queries";
 
@@ -9,6 +10,7 @@ export const metadata = {
 type Doctor = {
   _id: string;
   name: string;
+  slug?: string;
   specialty: string;
   bio?: string;
   clinic?: string;
@@ -26,17 +28,11 @@ function ClinicIcon() {
 }
 
 function DoctorCard({ doc }: { doc: Doctor }) {
-  return (
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center p-6 gap-3">
-      {/* Circular photo */}
+  const cardContent = (
+    <>
       <div className="relative w-28 h-28 rounded-full overflow-hidden bg-gray-100 shrink-0">
         {doc.imageUrl ? (
-          <Image
-            src={doc.imageUrl}
-            alt={doc.name}
-            fill
-            className="object-cover"
-          />
+          <Image src={doc.imageUrl} alt={doc.name} fill className="object-cover" />
         ) : (
           <div className="w-full h-full flex items-center justify-center text-gray-300">
             <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor">
@@ -45,32 +41,29 @@ function DoctorCard({ doc }: { doc: Doctor }) {
           </div>
         )}
       </div>
-
-      {/* Name */}
       <h2 className="text-base font-bold text-gray-900 text-center leading-tight">{doc.name}</h2>
-
-      {/* Specialty */}
       <p className="text-sm font-semibold text-[#3b82f6] text-center">{doc.specialty}</p>
-
-      {/* Clinic */}
       {doc.clinic && (
         <div className="flex items-center gap-1.5 text-gray-500 text-sm">
           <ClinicIcon />
           <span>{doc.clinic}</span>
         </div>
       )}
-
-      {/* Spacer */}
       <div className="flex-1" />
-
-      {/* Availability button */}
       {doc.availability && (
-        <button className="mt-2 w-full rounded-full border border-gray-300 text-gray-500 text-sm font-medium py-2.5 px-4 hover:border-gray-400 transition-colors">
+        <span className="mt-2 w-full text-center rounded-full border border-gray-300 text-gray-500 text-sm font-medium py-2.5 px-4">
           {doc.availability}
-        </button>
+        </span>
       )}
-    </div>
+    </>
   );
+
+  const className = "bg-white rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center p-6 gap-3 hover:shadow-md transition-shadow";
+
+  if (doc.slug) {
+    return <Link href={`/doctors/${doc.slug}`} className={className}>{cardContent}</Link>;
+  }
+  return <div className={className}>{cardContent}</div>;
 }
 
 export default async function DoctorsPage() {

@@ -6,63 +6,9 @@ import { usePathname } from "next/navigation";
 import { useState, useRef } from "react";
 import Container from "@/components/ui/Container";
 import { cn } from "@/lib/utils";
-
-// ─── Specialty Care mega menu data ────────────────────────────────────────────
-
-const specialtyColumns = [
-  [
-    { label: "Bariatric Surgery", href: "/specialty-care/bariatric-surgery" },
-    { label: "Cardiology", href: "/specialty-care/cardiology" },
-    { label: "Colorectal", href: "/specialty-care/colorectal" },
-    { label: "Dermatology", href: "/specialty-care/dermatology" },
-    { label: "Ear, Nose & Throat", href: "/specialty-care/ent" },
-    { label: "Gastroenterology", href: "/specialty-care/gastroenterology" },
-  ],
-  [
-    { label: "Gynaecology & Obstetrics", href: "/specialty-care/gynaecology" },
-    { label: "Family Medicine", href: "/specialty-care/family-medicine" },
-    { label: "Internal Medicine", href: "/specialty-care/internal-medicine" },
-    { label: "Orthopaedic", href: "/specialty-care/orthopaedic" },
-    { label: "Paediatrics", href: "/specialty-care/paediatrics" },
-    { label: "Renal Medicine", href: "/specialty-care/renal-medicine" },
-  ],
-  [
-    { label: "Respiratory & Intensive Care Medicine", href: "/specialty-care/respiratory" },
-    { label: "Sleep Medicine", href: "/specialty-care/sleep-medicine" },
-    { label: "Urology & Male Subfertility", href: "/specialty-care/urology" },
-    { label: "Internal Medicine", href: "/specialty-care/internal-medicine-2" },
-  ],
-];
-
-// ─── Nav links ────────────────────────────────────────────────────────────────
-
-const navLinks = [
-  { label: "Find a Doctor", href: "/doctors", hasMega: false },
-  { label: "Find a Clinic", href: "/clinics", hasMega: false },
-  { label: "Our Services", href: "/services", hasMega: false },
-  { label: "Specialty Care", href: "/specialty-care", hasMega: true },
-  { label: "Health Screening", href: "/health-screening", hasMega: false },
-  { label: "Medical Travel", href: "/medical-travel", hasMega: false },
-];
+import { useTranslation } from "@/contexts/LanguageContext";
 
 // ─── Icons ────────────────────────────────────────────────────────────────────
-
-function HmiLogo() {
-  return (
-    <Link href="/" className="flex items-center gap-2 shrink-0">
-      <svg width="48" height="44" viewBox="0 0 48 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <polygon points="0,22 10,8 14,12 6,22 14,32 10,36" fill="#2BA3A3" />
-        <polygon points="8,22 18,8 22,12 14,22 22,32 18,36" fill="#2BA3A3" />
-        <polygon points="26,22 36,8 40,12 32,22 40,32 36,36" fill="#1A3A6B" />
-        <polygon points="34,22 44,8 48,12 40,22 48,32 44,36" fill="#1A3A6B" />
-      </svg>
-      <div className="flex flex-col leading-none">
-        <span className="text-[22px] font-extrabold text-[#1A3A6B] tracking-wide">HMI</span>
-        <span className="text-[9px] font-semibold text-[#1A3A6B] tracking-[0.18em] uppercase">Medical</span>
-      </div>
-    </Link>
-  );
-}
 
 function MenuIcon() {
   return (
@@ -95,25 +41,48 @@ function ArrowRight() {
 // ─── Mega Menu ────────────────────────────────────────────────────────────────
 
 function SpecialtyMegaMenu({ onClose }: { onClose: () => void }) {
+  const { t } = useTranslation();
+  const s = t.nav.specialty;
+
+  const specialtyColumns = [
+    [
+      { label: s.bariatric, href: "/specialty-care/bariatric-surgery" },
+      { label: s.cardiology, href: "/specialty-care/cardiology" },
+      { label: s.colorectal, href: "/specialty-care/colorectal" },
+      { label: s.dermatology, href: "/specialty-care/dermatology" },
+      { label: s.ent, href: "/specialty-care/ent" },
+      { label: s.gastro, href: "/specialty-care/gastroenterology" },
+    ],
+    [
+      { label: s.gynae, href: "/specialty-care/gynaecology" },
+      { label: s.family, href: "/specialty-care/family-medicine" },
+      { label: s.internal, href: "/specialty-care/internal-medicine" },
+      { label: s.ortho, href: "/specialty-care/orthopaedic" },
+      { label: s.paeds, href: "/specialty-care/paediatrics" },
+      { label: s.renal, href: "/specialty-care/renal-medicine" },
+    ],
+    [
+      { label: s.respiratory, href: "/specialty-care/respiratory" },
+      { label: s.sleep, href: "/specialty-care/sleep-medicine" },
+      { label: s.urology, href: "/specialty-care/urology" },
+      { label: s.internalTwo, href: "/specialty-care/internal-medicine-2" },
+    ],
+  ];
+
   return (
     <div className="absolute top-full left-0 right-0 bg-white border-t border-gray-100 shadow-xl z-50">
       <Container className="py-10">
         <div className="flex gap-10">
-          {/* Left — specialty links */}
           <div className="flex-1">
             <p className="text-xs font-bold tracking-[0.18em] uppercase text-blue-600 mb-6">
-              Specialty Care
+              {t.nav.specialtyCare}
             </p>
             <div className="grid grid-cols-3 gap-x-8 gap-y-4">
               {specialtyColumns.map((col, ci) => (
                 <ul key={ci} className="flex flex-col gap-4">
                   {col.map(({ label, href }) => (
                     <li key={href}>
-                      <Link
-                        href={href}
-                        onClick={onClose}
-                        className="text-sm text-gray-800 hover:text-blue-700 transition-colors"
-                      >
+                      <Link href={href} onClick={onClose} className="text-sm text-gray-800 hover:text-blue-700 transition-colors">
                         {label}
                       </Link>
                     </li>
@@ -123,36 +92,19 @@ function SpecialtyMegaMenu({ onClose }: { onClose: () => void }) {
             </div>
           </div>
 
-          {/* Divider */}
           <div className="w-px bg-gray-100 shrink-0" />
 
-          {/* Right — feature card */}
           <div className="w-72 shrink-0 flex flex-col gap-4">
             <div className="relative w-full h-44 rounded-xl overflow-hidden bg-gray-100">
-              <Image
-                src="/images/specialists/doctor-feature.jpg"
-                alt="Medical Specialties"
-                fill
-                className="object-cover"
-              />
+              <Image src="/images/specialists/doctor-feature.jpg" alt="Medical Specialties" fill className="object-cover" />
             </div>
             <div>
-              <Link
-                href="/services"
-                onClick={onClose}
-                className="text-blue-600 font-semibold text-sm hover:text-blue-800 transition-colors"
-              >
-                Medical Specialties
+              <Link href="/services" onClick={onClose} className="text-blue-600 font-semibold text-sm hover:text-blue-800 transition-colors">
+                {t.nav.megaTitle}
               </Link>
-              <p className="text-sm text-gray-500 mt-1.5 leading-relaxed">
-                Choosing the right type of specialist, depends on your condition. Begin your journey by selecting from our 16 specialty types of care.
-              </p>
-              <Link
-                href="/services"
-                onClick={onClose}
-                className="inline-flex items-center gap-2 text-sm font-semibold text-gray-900 hover:text-blue-700 mt-3 transition-colors"
-              >
-                See all specialties
+              <p className="text-sm text-gray-500 mt-1.5 leading-relaxed">{t.nav.megaDesc}</p>
+              <Link href="/services" onClick={onClose} className="inline-flex items-center gap-2 text-sm font-semibold text-gray-900 hover:text-blue-700 mt-3 transition-colors">
+                {t.nav.seeAll}
                 <ArrowRight />
               </Link>
             </div>
@@ -167,9 +119,19 @@ function SpecialtyMegaMenu({ onClose }: { onClose: () => void }) {
 
 export default function Navbar() {
   const pathname = usePathname();
+  const { t } = useTranslation();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [megaOpen, setMegaOpen] = useState(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const navLinks = [
+    { label: t.nav.findDoctor, href: "/doctors", hasMega: false },
+    { label: t.nav.findClinic, href: "/clinics", hasMega: false },
+    { label: t.nav.services, href: "/services", hasMega: false },
+    { label: t.nav.specialtyCare, href: "/specialty-care", hasMega: true },
+    { label: t.nav.healthScreening, href: "/health-screening", hasMega: false },
+    { label: t.nav.medicalTravel, href: "/medical-travel", hasMega: false },
+  ];
 
   const openMega = () => {
     if (closeTimer.current) clearTimeout(closeTimer.current);
@@ -183,7 +145,9 @@ export default function Navbar() {
   return (
     <nav className="bg-white shadow-sm sticky top-0 z-40">
       <Container className="flex items-center justify-between h-[72px] gap-6">
-        <HmiLogo />
+        <Link href="/" className="shrink-0">
+          <Image src="/images/HMI-logo.svg" alt="HMI Medical" width={102} height={48} priority />
+        </Link>
 
         {/* Desktop nav links */}
         <ul className="hidden lg:flex items-center gap-7 flex-1 justify-center">
@@ -198,15 +162,11 @@ export default function Navbar() {
                 href={href}
                 className={cn(
                   "text-sm font-medium whitespace-nowrap transition-colors hover:text-blue-700",
-                  pathname === href || (hasMega && megaOpen)
-                    ? "text-blue-700"
-                    : "text-gray-700"
+                  pathname === href || (hasMega && megaOpen) ? "text-blue-700" : "text-gray-700"
                 )}
               >
                 {label}
               </Link>
-
-              {/* Active indicator line */}
               {hasMega && megaOpen && (
                 <span className="absolute -bottom-[26px] left-0 right-0 h-0.5 bg-blue-600" />
               )}
@@ -219,14 +179,14 @@ export default function Navbar() {
           href="/contact"
           className="hidden lg:inline-flex items-center justify-center rounded-full bg-blue-600 text-white text-sm font-semibold px-6 py-2.5 hover:bg-blue-700 transition-colors shrink-0"
         >
-          Make Appointment
+          {t.nav.makeAppointment}
         </Link>
 
         {/* Mobile toggle */}
         <button
           className="lg:hidden text-gray-700 hover:text-blue-700 transition-colors"
           onClick={() => setMobileOpen((v) => !v)}
-          aria-label="Toggle navigation"
+          aria-label={t.nav.toggleNav}
         >
           {mobileOpen ? <CloseIcon /> : <MenuIcon />}
         </button>
@@ -234,10 +194,7 @@ export default function Navbar() {
 
       {/* Mega menu */}
       {megaOpen && (
-        <div
-          onMouseEnter={openMega}
-          onMouseLeave={closeMega}
-        >
+        <div onMouseEnter={openMega} onMouseLeave={closeMega}>
           <SpecialtyMegaMenu onClose={() => setMegaOpen(false)} />
         </div>
       )}
@@ -264,7 +221,7 @@ export default function Navbar() {
               className="mt-3 inline-flex items-center justify-center rounded-full bg-blue-600 text-white text-sm font-semibold px-6 py-2.5 hover:bg-blue-700 transition-colors"
               onClick={() => setMobileOpen(false)}
             >
-              Make Appointment
+              {t.nav.makeAppointment}
             </Link>
           </Container>
         </div>

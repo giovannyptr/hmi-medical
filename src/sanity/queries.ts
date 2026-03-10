@@ -8,11 +8,40 @@ export async function getDoctors() {
   return client.fetch(`*[_type == "doctor"] | order(name asc) {
     _id,
     name,
+    "slug": slug.current,
     specialty,
     bio,
     clinic,
     availability,
     "imageUrl": image.asset->url
+  }`);
+}
+
+export async function getDoctor(slug: string) {
+  return client.fetch(`*[_type == "doctor" && slug.current == $slug][0] {
+    _id,
+    name,
+    "slug": slug.current,
+    specialty,
+    bio,
+    clinic,
+    availability,
+    services,
+    languages,
+    qualifications,
+    email,
+    "imageUrl": image.asset->url
+  }`, { slug });
+}
+
+export async function getClinics() {
+  return client.fetch(`*[_type == "clinic"] | order(order asc, name asc) {
+    _id,
+    type,
+    name,
+    address,
+    phone,
+    openingHours
   }`);
 }
 
@@ -22,6 +51,16 @@ export async function getServices() {
     title,
     description,
     icon
+  }`);
+}
+
+export async function getHealthScreeningPackages() {
+  return client.fetch(`*[_type == "healthScreeningPackage"] | order(order asc) {
+    _id,
+    title,
+    description,
+    price,
+    bookingUrl
   }`);
 }
 

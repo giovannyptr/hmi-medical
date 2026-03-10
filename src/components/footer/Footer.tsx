@@ -1,24 +1,12 @@
+"use client";
+
+import Image from "next/image";
 import Link from "next/link";
 import Container from "@/components/ui/Container";
+import { useTranslation } from "@/contexts/LanguageContext";
 
 // ─── Icons ────────────────────────────────────────────────────────────────────
 
-function HmiLogoWhite() {
-  return (
-    <div className="flex items-center gap-2">
-      <svg width="48" height="44" viewBox="0 0 48 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <polygon points="0,22 10,8 14,12 6,22 14,32 10,36" fill="#4DD4AC" />
-        <polygon points="8,22 18,8 22,12 14,22 22,32 18,36" fill="#4DD4AC" />
-        <polygon points="26,22 36,8 40,12 32,22 40,32 36,36" fill="white" />
-        <polygon points="34,22 44,8 48,12 40,22 48,32 44,36" fill="white" />
-      </svg>
-      <div className="flex flex-col leading-none">
-        <span className="text-[22px] font-extrabold text-white tracking-wide">HMI</span>
-        <span className="text-[9px] font-semibold text-white tracking-[0.18em] uppercase">Medical</span>
-      </div>
-    </div>
-  );
-}
 
 function AppleIcon() {
   return (
@@ -83,45 +71,49 @@ function LinkedInIcon() {
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
-const exploreLinks = [
-  { label: "Find a Doctor", href: "/doctors" },
-  { label: "Find a Clinic", href: "/clinics" },
-  { label: "Medical Travel", href: "/medical-travel" },
-  { label: "Corporate Healthcare", href: "/corporate" },
-  { label: "Healthcare Education", href: "/education" },
-  { label: "HMI One", href: "/hmi-one" },
-];
-
-const serviceLinks = [
-  { label: "Health Screening", href: "/services/health-screening" },
-  { label: "Medical Specialties", href: "/services" },
-  { label: "Day Surgery", href: "/services/day-surgery" },
-  { label: "GP Services", href: "/services/gp-services" },
-  { label: "Healthier SG", href: "/services/healthier-sg" },
-  { label: "Radiology", href: "/services/radiology" },
-  { label: "Vaccination", href: "/services/vaccination" },
-  { label: "Home Care Services", href: "/services/home-care" },
-  { label: "Aesthetics Treatments", href: "/services/aesthetics" },
-];
-
-const aboutLinks = [
-  { label: "About HMI Medical", href: "/about" },
-  { label: "Mission & Values", href: "/about/mission" },
-  { label: "Model", href: "/about/model" },
-  { label: "Governance", href: "/about/governance" },
-  { label: "Milestones", href: "/about/milestones" },
-  { label: "Careers", href: "/careers" },
-];
-
-const newsLinks = [
-  { label: "Latest Events", href: "/news/events" },
-  { label: "In the News", href: "/news" },
-  { label: "Health Tips", href: "/news/health-tips" },
-];
-
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export default function Footer() {
+  const { t } = useTranslation();
+  const f = t.footer;
+  const n = t.nav;
+
+  const exploreLinks = [
+    { label: n.findDoctor, href: "/doctors" },
+    { label: n.findClinic, href: "/clinics" },
+    { label: n.medicalTravel, href: "/medical-travel" },
+    { label: "Corporate Healthcare", href: "/corporate" },
+    { label: "Healthcare Education", href: "/education" },
+    { label: "HMI One", href: "/hmi-one" },
+  ];
+
+  const serviceLinks = [
+    { label: n.healthScreening, href: "/services/health-screening" },
+    { label: n.megaTitle, href: "/services" },
+    { label: "Day Surgery", href: "/services/day-surgery" },
+    { label: "GP Services", href: "/services/gp-services" },
+    { label: "Healthier SG", href: "/services/healthier-sg" },
+    { label: "Radiology", href: "/services/radiology" },
+    { label: "Vaccination", href: "/services/vaccination" },
+    { label: "Home Care Services", href: "/services/home-care" },
+    { label: "Aesthetics Treatments", href: "/services/aesthetics" },
+  ];
+
+  const aboutLinks = [
+    { label: "About HMI Medical", href: "/about" },
+    { label: "Mission & Values", href: "/about/mission" },
+    { label: "Model", href: "/about/model" },
+    { label: "Governance", href: "/about/governance" },
+    { label: "Milestones", href: "/about/milestones" },
+    { label: "Careers", href: "/careers" },
+  ];
+
+  const newsLinks = [
+    { label: f.latestEvents, href: "/news/events" },
+    { label: f.inTheNews, href: "/news" },
+    { label: f.healthTips, href: "/news/health-tips" },
+  ];
+
   return (
     <footer className="bg-[#004E89] text-white">
       {/* Main grid */}
@@ -130,31 +122,31 @@ export default function Footer() {
 
           {/* Col 1 — Logo + app downloads */}
           <div className="flex flex-col gap-6">
-            <HmiLogoWhite />
+            <Link href="/">
+              <Image
+                src="/images/HMI-logo.svg"
+                alt="HMI Medical"
+                width={102}
+                height={48}
+                className="brightness-0 invert"
+              />
+            </Link>
             <div>
-              <p className="text-white/50 text-xs mb-3">
-                Download Healthcare app<br />HMI One
-              </p>
+              <p className="text-white/50 text-xs mb-3 whitespace-pre-line">{f.downloadApp}</p>
               {/* App Store */}
-              <a
-                href="#"
-                className="flex items-center gap-2.5 bg-black rounded-lg px-4 py-2.5 mb-2.5 w-fit hover:bg-gray-900 transition-colors"
-              >
+              <a href="#" className="flex items-center gap-2.5 bg-black rounded-lg px-4 py-2.5 mb-2.5 w-fit hover:bg-gray-900 transition-colors">
                 <AppleIcon />
                 <div className="leading-none">
-                  <p className="text-[9px] text-white/70">Download on the</p>
-                  <p className="text-sm font-semibold text-white">App Store</p>
+                  <p className="text-[9px] text-white/70">{f.downloadOn}</p>
+                  <p className="text-sm font-semibold text-white">{f.appStore}</p>
                 </div>
               </a>
               {/* Google Play */}
-              <a
-                href="#"
-                className="flex items-center gap-2.5 bg-black rounded-lg px-4 py-2.5 w-fit hover:bg-gray-900 transition-colors"
-              >
+              <a href="#" className="flex items-center gap-2.5 bg-black rounded-lg px-4 py-2.5 w-fit hover:bg-gray-900 transition-colors">
                 <PlayIcon />
                 <div className="leading-none">
-                  <p className="text-[9px] text-white/70">GET IT ON</p>
-                  <p className="text-sm font-semibold text-white">Google Play</p>
+                  <p className="text-[9px] text-white/70">{f.getItOn}</p>
+                  <p className="text-sm font-semibold text-white">{f.googlePlay}</p>
                 </div>
               </a>
             </div>
@@ -162,7 +154,7 @@ export default function Footer() {
 
           {/* Col 2 — Explore HMI */}
           <div>
-            <p className="text-white/50 text-sm mb-5">Explore HMI</p>
+            <p className="text-white/50 text-sm mb-5">{f.exploreHmi}</p>
             <ul className="flex flex-col gap-3.5">
               {exploreLinks.map(({ label, href }) => (
                 <li key={href}>
@@ -176,7 +168,7 @@ export default function Footer() {
 
           {/* Col 3 — Our Services */}
           <div>
-            <p className="text-white/50 text-sm mb-5">Our Services</p>
+            <p className="text-white/50 text-sm mb-5">{f.ourServices}</p>
             <ul className="flex flex-col gap-3.5">
               {serviceLinks.map(({ label, href }) => (
                 <li key={href}>
@@ -191,7 +183,7 @@ export default function Footer() {
           {/* Col 4 — About Us + News & Resources */}
           <div className="flex flex-col gap-8">
             <div>
-              <p className="text-white/50 text-sm mb-5">About Us</p>
+              <p className="text-white/50 text-sm mb-5">{f.aboutUs}</p>
               <ul className="flex flex-col gap-3.5">
                 {aboutLinks.map(({ label, href }) => (
                   <li key={href}>
@@ -203,7 +195,7 @@ export default function Footer() {
               </ul>
             </div>
             <div>
-              <p className="text-white/50 text-sm mb-5">News & Resources</p>
+              <p className="text-white/50 text-sm mb-5">{f.news}</p>
               <ul className="flex flex-col gap-3.5">
                 {newsLinks.map(({ label, href }) => (
                   <li key={href}>
@@ -218,12 +210,10 @@ export default function Footer() {
 
           {/* Col 5 — Contact */}
           <div className="flex flex-col gap-5">
-            <p className="font-bold text-base leading-snug">
-              Health Management<br />International Pte Ltd
-            </p>
+            <p className="font-bold text-base leading-snug whitespace-pre-line">{f.company}</p>
             <div className="flex items-start gap-2.5 text-sm text-white/80">
               <LocationIcon />
-              <span>320 Serangoon Road, #18-08 Centrium Square, Singapore 218108</span>
+              <span>{f.address}</span>
             </div>
             <div className="flex items-center gap-2.5 text-sm text-white/80">
               <MailIcon />
@@ -235,7 +225,7 @@ export default function Footer() {
               href="/contact"
               className="inline-flex items-center gap-2 rounded-full border border-white text-white text-sm font-semibold px-5 py-2.5 hover:bg-white hover:text-[#004E89] transition-colors w-fit"
             >
-              Contact us
+              {f.contactUs}
               <ArrowRight />
             </Link>
           </div>
@@ -255,21 +245,19 @@ export default function Footer() {
               <span className="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center">
                 <LinkedInIcon />
               </span>
-              Linkedin
+              {f.linkedin}
             </a>
             <span className="text-white/30">·</span>
-            <Link href="/privacy" className="hover:text-white transition-colors">Privacy</Link>
+            <Link href="/privacy" className="hover:text-white transition-colors">{f.privacy}</Link>
             <span className="text-white/30">·</span>
-            <Link href="/terms" className="hover:text-white transition-colors">Terms</Link>
+            <Link href="/terms" className="hover:text-white transition-colors">{f.terms}</Link>
             <span className="text-white/30">·</span>
             <button className="flex items-center gap-1.5 hover:text-white transition-colors">
               <GlobeIcon />
-              English
+              {f.language}
             </button>
           </div>
-          <p className="text-white/50 text-xs">
-            Copyright © 2025 HMI Medical. All Rights Reserved.
-          </p>
+          <p className="text-white/50 text-xs">{f.copyright}</p>
         </Container>
       </div>
     </footer>

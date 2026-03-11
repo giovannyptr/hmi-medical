@@ -5,7 +5,7 @@ import translations, { type Locale, type Translations } from "@/lib/translations
 
 interface LanguageContextValue {
   locale: Locale;
-  t: Translations;
+  t: (typeof translations)[Locale];
   setLocale: (locale: Locale) => void;
 }
 

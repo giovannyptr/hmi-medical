@@ -61,10 +61,10 @@ export default function SpecialistCareSection() {
     className="w-full h-full"
   >
     <path
-      d="M0 0 H1000 
-         C1150 0 1200 80 1200 160 
-         V520 
-         H0 
+      d="M0 0 H1000
+         C1150 0 1200 80 1200 160
+         V520
+         H0
          Z"
       fill="#f4f7ff"
     />
@@ -110,10 +110,10 @@ export default function SpecialistCareSection() {
               <div key={i} className="min-w-[350px] md:min-w-[390px] snap-start">
                 {/* Image */}
                 <div className="relative h-[450px] w-full mb-6 rounded-xl overflow-hidden shadow-sm">
-                   <Image 
-                    src={s.image} 
-                    alt={s.title} 
-                    fill 
+                   <Image
+                    src={s.image}
+                    alt={s.title}
+                    fill
                     className="object-cover"
                   />
                 </div>

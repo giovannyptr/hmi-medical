@@ -65,12 +65,13 @@ export default function InsightsSection({ news }: { news?: NewsItem[] }) {
           Sharing more insights
         </h2>
 
-        {/* Cards layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_0.45fr_0.35fr] gap-4 h-auto lg:h-[520px]">
-          {/* Featured card — large */}
+        {/* Mobile layout */}
+        <div className="lg:hidden flex flex-col gap-3">
+          {/* Featured card — tall */}
           <Link
             href={featured.href}
-            className="group relative rounded-2xl overflow-hidden min-h-[340px] lg:min-h-0"
+            className="group relative rounded-2xl overflow-hidden w-full"
+            style={{ height: "400px" }}
           >
             <Image
               src={featured.image}
@@ -78,9 +79,55 @@ export default function InsightsSection({ news }: { news?: NewsItem[] }) {
               fill
               className="object-cover group-hover:scale-105 transition-transform duration-500"
             />
-            {/* Gradient overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-            {/* Content */}
+            <div className="absolute bottom-0 left-0 right-0 p-6">
+              <h3 className="text-white font-bold text-lg mb-1.5 leading-snug">
+                {featured.title}
+              </h3>
+              <p className="text-white/80 text-sm leading-relaxed">
+                {featured.description}
+              </p>
+            </div>
+          </Link>
+
+          {/* Secondary cards — small */}
+          {secondary.map(({ title, image, href }) => (
+            <Link
+              key={title}
+              href={href}
+              className="group relative rounded-2xl overflow-hidden w-full"
+              style={{ height: "80px" }}
+            >
+              <Image
+                src={image}
+                alt={title}
+                fill
+                className="object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/30 to-transparent" />
+              <div className="absolute inset-0 flex items-center px-5">
+                <h3 className="text-white font-bold text-sm leading-snug">
+                  {title}
+                </h3>
+              </div>
+            </Link>
+          ))}
+        </div>
+
+        {/* Desktop: original grid layout */}
+        <div className="hidden lg:grid lg:grid-cols-[1fr_0.45fr_0.35fr] gap-4 h-[520px]">
+          {/* Featured card — large */}
+          <Link
+            href={featured.href}
+            className="group relative rounded-2xl overflow-hidden"
+          >
+            <Image
+              src={featured.image}
+              alt={featured.title}
+              fill
+              className="object-cover group-hover:scale-105 transition-transform duration-500"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
             <div className="absolute bottom-0 left-0 right-0 p-7">
               <h3 className="text-white font-bold text-xl mb-2 leading-snug">
                 {featured.title}
@@ -96,7 +143,7 @@ export default function InsightsSection({ news }: { news?: NewsItem[] }) {
             <Link
               key={title}
               href={href}
-              className="group relative rounded-2xl overflow-hidden min-h-[260px] lg:min-h-0"
+              className="group relative rounded-2xl overflow-hidden"
             >
               <Image
                 src={image}
@@ -104,9 +151,7 @@ export default function InsightsSection({ news }: { news?: NewsItem[] }) {
                 fill
                 className="object-cover group-hover:scale-105 transition-transform duration-500"
               />
-              {/* Gradient overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/15 to-transparent" />
-              {/* Content */}
               <div className="absolute bottom-0 left-0 right-0 p-5">
                 <h3 className="text-white font-bold text-lg leading-snug">
                   {title}

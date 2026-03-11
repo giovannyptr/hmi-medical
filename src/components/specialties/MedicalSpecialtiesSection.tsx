@@ -1,6 +1,11 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import Container from "@/components/ui/Container";
+
+const MOBILE_PAGE_SIZE = 6;
 
 const specialties = [
   {
@@ -78,6 +83,9 @@ const specialties = [
 ];
 
 export default function MedicalSpecialtiesSection() {
+  const total = specialties.length;
+  const [visibleCount, setVisibleCount] = useState(MOBILE_PAGE_SIZE);
+
   return (
     <section className="py-16 bg-white">
       <Container>
@@ -92,25 +100,17 @@ export default function MedicalSpecialtiesSection() {
           </p>
         </div>
 
-        {/* Cards grid */}
+        {/* Cards grid — mobile shows 6 with load more, desktop shows all */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {specialties.map(({ title, description, image, href }) => (
+          {specialties.map(({ title, description, image, href }, index) => (
             <Link
               key={title}
               href={href}
-              className="group flex items-center gap-5 rounded-2xl border border-gray-100 bg-white px-6 py-5 shadow-sm hover:shadow-md hover:border-blue-100 transition-all"
+              className={`group flex items-center gap-5 rounded-2xl border border-gray-100 bg-white px-6 py-5 shadow-sm hover:shadow-md hover:border-blue-100 transition-all ${index >= visibleCount ? "hidden sm:flex" : "flex"}`}
             >
-              {/* Circle image */}
               <div className="relative w-20 h-20 rounded-full bg-blue-50 overflow-hidden shrink-0">
-                <Image
-                  src={image}
-                  alt={title}
-                  fill
-                  className="object-cover"
-                />
+                <Image src={image} alt={title} fill className="object-cover" />
               </div>
-
-              {/* Text */}
               <div>
                 <h3 className="font-bold text-gray-900 leading-snug mb-1.5 group-hover:text-blue-700 transition-colors">
                   {title}
@@ -121,6 +121,21 @@ export default function MedicalSpecialtiesSection() {
               </div>
             </Link>
           ))}
+        </div>
+
+        {/* Load More — mobile only */}
+        <div className="sm:hidden mt-8 flex flex-col items-center gap-4">
+          <p className="text-sm text-gray-500">
+            Showing {Math.min(visibleCount, total)} of {total} results
+          </p>
+          {visibleCount < total && (
+            <button
+              onClick={() => setVisibleCount(total)}
+              className="px-8 py-3 rounded-full border-2 border-blue-700 text-blue-700 font-semibold text-sm hover:bg-blue-700 hover:text-white transition-colors"
+            >
+              Load More
+            </button>
+          )}
         </div>
       </Container>
     </section>

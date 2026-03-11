@@ -10,35 +10,49 @@ import { useTranslation } from "@/contexts/LanguageContext";
 
 // ─── Icons ────────────────────────────────────────────────────────────────────
 
-function MenuIcon() {
-  return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-      <line x1="3" y1="6" x2="21" y2="6" />
-      <line x1="3" y1="12" x2="21" y2="12" />
-      <line x1="3" y1="18" x2="21" y2="18" />
-    </svg>
-  );
-}
+const MenuIcon = () => (
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+    <line x1="3" y1="6" x2="21" y2="6" />
+    <line x1="3" y1="12" x2="21" y2="12" />
+    <line x1="3" y1="18" x2="21" y2="18" />
+  </svg>
+);
 
-function CloseIcon() {
-  return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-      <line x1="18" y1="6" x2="6" y2="18" />
-      <line x1="6" y1="6" x2="18" y2="18" />
-    </svg>
-  );
-}
+const CloseIcon = () => (
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+    <line x1="18" y1="6" x2="6" y2="18" />
+    <line x1="6" y1="6" x2="18" y2="18" />
+  </svg>
+);
 
-function ArrowRight() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <line x1="5" y1="12" x2="19" y2="12" />
-      <polyline points="12 5 19 12 12 19" />
-    </svg>
-  );
-}
+const ChevronRight = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="m9 18 6-6-6-6" />
+  </svg>
+);
 
-// ─── Mega Menu ────────────────────────────────────────────────────────────────
+const ArrowRight = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <line x1="5" y1="12" x2="19" y2="12" />
+    <polyline points="12 5 19 12 12 19" />
+  </svg>
+);
+
+const SearchIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <circle cx="11" cy="11" r="8" />
+    <line x1="21" y1="21" x2="16.65" y2="16.65" />
+  </svg>
+);
+
+const GlobeIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <circle cx="12" cy="12" r="10" />
+    <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+  </svg>
+);
+
+// ─── Desktop Mega Menu ────────────────────────────────────────────────────────
 
 function SpecialtyMegaMenu({ onClose }: { onClose: () => void }) {
   const { t } = useTranslation();
@@ -91,9 +105,7 @@ function SpecialtyMegaMenu({ onClose }: { onClose: () => void }) {
               ))}
             </div>
           </div>
-
           <div className="w-px bg-gray-100 shrink-0" />
-
           <div className="w-72 shrink-0 flex flex-col gap-4">
             <div className="relative w-full h-44 rounded-xl overflow-hidden bg-gray-100">
               <Image src="/images/specialists/doctor-feature.jpg" alt="Medical Specialties" fill className="object-cover" />
@@ -111,6 +123,107 @@ function SpecialtyMegaMenu({ onClose }: { onClose: () => void }) {
           </div>
         </div>
       </Container>
+    </div>
+  );
+}
+
+// ─── Mobile Full-Screen Menu ──────────────────────────────────────────────────
+
+function MobileMenu({ onClose }: { onClose: () => void }) {
+  const pathname = usePathname();
+  const { t, locale, setLocale } = useTranslation();
+
+  const mainLinks = [
+    { label: t.nav.findDoctor, href: "/doctors", hasArrow: false },
+    { label: t.nav.findClinic, href: "/clinics", hasArrow: false },
+    { label: t.nav.services, href: "/services", hasArrow: true },
+    { label: t.nav.specialtyCare, href: "/specialty-care", hasArrow: true },
+    { label: t.nav.healthScreening, href: "/health-screening", hasArrow: false },
+    { label: t.nav.medicalTravel, href: "/medical-travel", hasArrow: true },
+  ];
+
+  const bottomLinks = [
+    { label: t.topbar.aboutUs, href: "/about" },
+    { label: t.topbar.news, href: "/news" },
+    { label: t.topbar.contact, href: "/contact" },
+  ];
+
+  const toggleLocale = () => {
+    setLocale(locale === "en" ? "id" : "en");
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 bg-white flex flex-col">
+      {/* Header */}
+      <div className="flex items-center justify-between px-5 h-[64px] border-b border-gray-100 shrink-0">
+        <Link href="/" onClick={onClose}>
+          <Image src="/images/HMI-logo.svg" alt="HMI Medical" width={88} height={42} priority />
+        </Link>
+        <button onClick={onClose} className="text-gray-700 hover:text-gray-900 transition-colors" aria-label="Close menu">
+          <CloseIcon />
+        </button>
+      </div>
+
+      {/* Body — flex column so bottom section sticks to bottom */}
+      <div className="flex-1 flex flex-col overflow-y-auto">
+        {/* Top section */}
+        <div>
+          {/* Make Appointment — highlighted row */}
+          <Link
+            href="/contact"
+            onClick={onClose}
+            className="flex items-center justify-between px-5 py-4 bg-[#2b4bbf] text-white font-semibold text-[15px]"
+          >
+            {t.nav.makeAppointment}
+            <ChevronRight />
+          </Link>
+
+          {/* Main nav links */}
+          <div className="divide-y divide-gray-100">
+            {mainLinks.map(({ label, href, hasArrow }) => (
+              <Link
+                key={href}
+                href={href}
+                onClick={onClose}
+                className={cn(
+                  "flex items-center justify-between px-5 py-4 text-[15px] font-medium transition-colors",
+                  pathname === href ? "text-[#0047ab]" : "text-gray-800"
+                )}
+              >
+                {label}
+                {hasArrow && <ChevronRight />}
+              </Link>
+            ))}
+          </div>
+        </div>
+
+        {/* Bottom section — pinned to bottom */}
+        <div className="mt-auto bg-gray-50 divide-y divide-gray-100 border-t border-gray-100">
+          {/* Language toggle */}
+          <button
+            onClick={toggleLocale}
+            className="w-full flex items-center justify-between px-5 py-4 text-[15px] font-medium text-gray-700"
+          >
+            <span className="flex items-center gap-3">
+              <GlobeIcon />
+              {locale === "en" ? "English" : "Bahasa Indonesia"}
+            </span>
+            <ChevronRight />
+          </button>
+
+          {bottomLinks.map(({ label, href }) => (
+            <Link
+              key={href}
+              href={href}
+              onClick={onClose}
+              className="flex items-center justify-between px-5 py-4 text-[15px] font-medium text-gray-700"
+            >
+              {label}
+              <ChevronRight />
+            </Link>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
@@ -143,89 +256,71 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="bg-white shadow-sm sticky top-0 z-40">
-      <Container className="flex items-center justify-between h-[72px] gap-6">
-        <Link href="/" className="shrink-0">
-          <Image src="/images/HMI-logo.svg" alt="HMI Medical" width={102} height={48} priority />
-        </Link>
+    <>
+      <nav className="bg-white shadow-sm sticky top-0 z-40">
+        <Container className="flex items-center justify-between h-[64px] gap-4">
+          <Link href="/" className="shrink-0">
+            <Image src="/images/HMI-logo.svg" alt="HMI Medical" width={102} height={48} priority />
+          </Link>
 
-        {/* Desktop nav links */}
-        <ul className="hidden lg:flex items-center gap-7 flex-1 justify-center">
-          {navLinks.map(({ label, href, hasMega }) => (
-            <li
-              key={href}
-              onMouseEnter={hasMega ? openMega : undefined}
-              onMouseLeave={hasMega ? closeMega : undefined}
-              className="relative"
-            >
-              <Link
-                href={href}
-                className={cn(
-                  "text-sm font-medium whitespace-nowrap transition-colors hover:text-blue-700",
-                  pathname === href || (hasMega && megaOpen) ? "text-blue-700" : "text-gray-700"
-                )}
-              >
-                {label}
-              </Link>
-              {hasMega && megaOpen && (
-                <span className="absolute -bottom-[26px] left-0 right-0 h-0.5 bg-blue-600" />
-              )}
-            </li>
-          ))}
-        </ul>
-
-        {/* CTA button */}
-        <Link
-          href="/contact"
-          className="hidden lg:inline-flex items-center justify-center rounded-full bg-blue-600 text-white text-sm font-semibold px-6 py-2.5 hover:bg-blue-700 transition-colors shrink-0"
-        >
-          {t.nav.makeAppointment}
-        </Link>
-
-        {/* Mobile toggle */}
-        <button
-          className="lg:hidden text-gray-700 hover:text-blue-700 transition-colors"
-          onClick={() => setMobileOpen((v) => !v)}
-          aria-label={t.nav.toggleNav}
-        >
-          {mobileOpen ? <CloseIcon /> : <MenuIcon />}
-        </button>
-      </Container>
-
-      {/* Mega menu */}
-      {megaOpen && (
-        <div onMouseEnter={openMega} onMouseLeave={closeMega}>
-          <SpecialtyMegaMenu onClose={() => setMegaOpen(false)} />
-        </div>
-      )}
-
-      {/* Mobile menu */}
-      {mobileOpen && (
-        <div className="lg:hidden border-t bg-white">
-          <Container className="py-4 flex flex-col gap-1">
-            {navLinks.map(({ label, href }) => (
-              <Link
+          {/* Desktop nav links */}
+          <ul className="hidden lg:flex items-center gap-7 flex-1 justify-center">
+            {navLinks.map(({ label, href, hasMega }) => (
+              <li
                 key={href}
-                href={href}
-                className={cn(
-                  "py-2.5 text-sm font-medium transition-colors hover:text-blue-700",
-                  pathname === href ? "text-blue-700" : "text-gray-700"
-                )}
-                onClick={() => setMobileOpen(false)}
+                onMouseEnter={hasMega ? openMega : undefined}
+                onMouseLeave={hasMega ? closeMega : undefined}
+                className="relative"
               >
-                {label}
-              </Link>
+                <Link
+                  href={href}
+                  className={cn(
+                    "text-sm font-medium whitespace-nowrap transition-colors hover:text-blue-700",
+                    pathname === href || (hasMega && megaOpen) ? "text-blue-700" : "text-gray-700"
+                  )}
+                >
+                  {label}
+                </Link>
+                {hasMega && megaOpen && (
+                  <span className="absolute -bottom-[26px] left-0 right-0 h-0.5 bg-blue-600" />
+                )}
+              </li>
             ))}
-            <Link
-              href="/contact"
-              className="mt-3 inline-flex items-center justify-center rounded-full bg-blue-600 text-white text-sm font-semibold px-6 py-2.5 hover:bg-blue-700 transition-colors"
-              onClick={() => setMobileOpen(false)}
+          </ul>
+
+          {/* Desktop CTA */}
+          <Link
+            href="/contact"
+            className="hidden lg:inline-flex items-center justify-center rounded-full bg-blue-600 text-white text-sm font-semibold px-6 py-2.5 hover:bg-blue-700 transition-colors shrink-0"
+          >
+            {t.nav.makeAppointment}
+          </Link>
+
+          {/* Mobile: search + hamburger */}
+          <div className="flex items-center gap-3 lg:hidden">
+            <button className="text-gray-700 hover:text-blue-700 transition-colors" aria-label="Search">
+              <SearchIcon />
+            </button>
+            <button
+              className="text-gray-700 hover:text-blue-700 transition-colors"
+              onClick={() => setMobileOpen(true)}
+              aria-label={t.nav.toggleNav}
             >
-              {t.nav.makeAppointment}
-            </Link>
-          </Container>
-        </div>
-      )}
-    </nav>
+              <MenuIcon />
+            </button>
+          </div>
+        </Container>
+
+        {/* Desktop mega menu */}
+        {megaOpen && (
+          <div onMouseEnter={openMega} onMouseLeave={closeMega}>
+            <SpecialtyMegaMenu onClose={() => setMegaOpen(false)} />
+          </div>
+        )}
+      </nav>
+
+      {/* Mobile full-screen overlay */}
+      {mobileOpen && <MobileMenu onClose={() => setMobileOpen(false)} />}
+    </>
   );
 }

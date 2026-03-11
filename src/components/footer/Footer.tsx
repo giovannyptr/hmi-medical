@@ -2,11 +2,11 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import Container from "@/components/ui/Container";
 import { useTranslation } from "@/contexts/LanguageContext";
 
 // ─── Icons ────────────────────────────────────────────────────────────────────
-
 
 function AppleIcon() {
   return (
@@ -51,15 +51,6 @@ function ArrowRight() {
   );
 }
 
-function GlobeIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <circle cx="12" cy="12" r="10" />
-      <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-    </svg>
-  );
-}
-
 function LinkedInIcon() {
   return (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -69,7 +60,46 @@ function LinkedInIcon() {
   );
 }
 
-// ─── Data ─────────────────────────────────────────────────────────────────────
+function ChevronDown({ open }: { open: boolean }) {
+  return (
+    <svg
+      width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+      className={`transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+      aria-hidden="true"
+    >
+      <polyline points="6 9 12 15 18 9" />
+    </svg>
+  );
+}
+
+// ─── Mobile Accordion Item ─────────────────────────────────────────────────────
+
+function AccordionGroup({ label, links }: { label: string; links: { label: string; href: string }[] }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="border-b border-white/10">
+      <button
+        onClick={() => setOpen((v) => !v)}
+        className="w-full flex items-center justify-between py-4 font-bold text-white text-[15px]"
+      >
+        {label}
+        <ChevronDown open={open} />
+      </button>
+      {open && (
+        <ul className="flex flex-col gap-3 pb-4">
+          {links.map(({ label, href }) => (
+            <li key={href}>
+              <Link href={href} className="text-white/70 text-sm hover:text-white transition-colors">
+                {label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
@@ -116,8 +146,105 @@ export default function Footer() {
 
   return (
     <footer className="bg-[#004E89] text-white">
-      {/* Main grid */}
-      <Container className="py-16">
+
+      {/* ── MOBILE LAYOUT ─────────────────────────────────────────── */}
+      <div className="lg:hidden px-5 pt-10 pb-6 flex flex-col gap-0">
+
+        {/* Logo */}
+        <Link href="/" className="mb-8 block">
+          <Image
+            src="/images/HMI-logo.svg"
+            alt="HMI Medical"
+            width={102}
+            height={48}
+            className="brightness-0 invert"
+          />
+        </Link>
+
+        {/* Simple top links */}
+        <div className="border-b border-white/10">
+          <Link href="/doctors" className="block py-4 font-bold text-white text-[15px] border-b border-white/10">
+            {n.findDoctor}
+          </Link>
+          <Link href="/clinics" className="block py-4 font-bold text-white text-[15px]">
+            {n.findClinic}
+          </Link>
+        </div>
+
+        {/* Accordion groups */}
+        <AccordionGroup label={f.exploreHmi} links={exploreLinks} />
+        <AccordionGroup label={f.ourServices} links={serviceLinks} />
+        <AccordionGroup label={f.aboutUs} links={aboutLinks} />
+        <AccordionGroup label={f.news} links={newsLinks} />
+
+        {/* Contact info */}
+        <div className="flex flex-col gap-4 pt-8 pb-8 border-b border-white/10">
+          <p className="font-bold text-base leading-snug">{f.company}</p>
+          <div className="flex items-start gap-2.5 text-sm text-white/80">
+            <LocationIcon />
+            <span>{f.address}</span>
+          </div>
+          <div className="flex items-center gap-2.5 text-sm text-white/80">
+            <MailIcon />
+            <a href="mailto:askus@hmimedical.com" className="hover:text-white transition-colors">
+              askus@hmimedical.com
+            </a>
+          </div>
+          <Link
+            href="/contact"
+            className="inline-flex items-center gap-2 rounded-full border border-white text-white text-sm font-semibold px-5 py-2.5 hover:bg-white hover:text-[#004E89] transition-colors w-fit"
+          >
+            {f.contactUs}
+            <ArrowRight />
+          </Link>
+        </div>
+
+        {/* App downloads */}
+        <div className="py-8 border-b border-white/10">
+          <p className="text-white/50 text-sm mb-4">{f.downloadApp}</p>
+          <div className="flex gap-3">
+            <a href="#" className="flex items-center gap-2.5 bg-black rounded-lg px-4 py-2.5 hover:bg-gray-900 transition-colors flex-1 justify-center">
+              <AppleIcon />
+              <div className="leading-none">
+                <p className="text-[9px] text-white/70">{f.downloadOn}</p>
+                <p className="text-sm font-semibold text-white">{f.appStore}</p>
+              </div>
+            </a>
+            <a href="#" className="flex items-center gap-2.5 bg-black rounded-lg px-4 py-2.5 hover:bg-gray-900 transition-colors flex-1 justify-center">
+              <PlayIcon />
+              <div className="leading-none">
+                <p className="text-[9px] text-white/70">{f.getItOn}</p>
+                <p className="text-sm font-semibold text-white">{f.googlePlay}</p>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        {/* Copyright + social */}
+        <div className="pt-6 flex flex-col items-center gap-3 text-sm text-white/60">
+          <p className="text-white/50 text-xs text-center">{f.copyright}</p>
+          <div className="flex items-center gap-3">
+            <a
+              href="https://www.linkedin.com/company/hmi-medical"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 hover:text-white transition-colors"
+            >
+              <span className="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center">
+                <LinkedInIcon />
+              </span>
+              {f.linkedin}
+            </a>
+            <span className="text-white/30">·</span>
+            <Link href="/privacy" className="hover:text-white transition-colors">{f.privacy}</Link>
+            <span className="text-white/30">·</span>
+            <Link href="/terms" className="hover:text-white transition-colors">{f.terms}</Link>
+          </div>
+        </div>
+      </div>
+
+      {/* ── DESKTOP LAYOUT ────────────────────────────────────────── */}
+      <Container className="hidden lg:block py-16">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.2fr_1fr_1.2fr_1fr_1.2fr] gap-10">
 
           {/* Col 1 — Logo + app downloads */}
@@ -133,7 +260,6 @@ export default function Footer() {
             </Link>
             <div>
               <p className="text-white/50 text-xs mb-3 whitespace-pre-line">{f.downloadApp}</p>
-              {/* App Store */}
               <a href="#" className="flex items-center gap-2.5 bg-black rounded-lg px-4 py-2.5 mb-2.5 w-fit hover:bg-gray-900 transition-colors">
                 <AppleIcon />
                 <div className="leading-none">
@@ -141,7 +267,6 @@ export default function Footer() {
                   <p className="text-sm font-semibold text-white">{f.appStore}</p>
                 </div>
               </a>
-              {/* Google Play */}
               <a href="#" className="flex items-center gap-2.5 bg-black rounded-lg px-4 py-2.5 w-fit hover:bg-gray-900 transition-colors">
                 <PlayIcon />
                 <div className="leading-none">
@@ -158,9 +283,7 @@ export default function Footer() {
             <ul className="flex flex-col gap-3.5">
               {exploreLinks.map(({ label, href }) => (
                 <li key={href}>
-                  <Link href={href} className="font-semibold text-sm hover:text-white/70 transition-colors">
-                    {label}
-                  </Link>
+                  <Link href={href} className="font-semibold text-sm hover:text-white/70 transition-colors">{label}</Link>
                 </li>
               ))}
             </ul>
@@ -172,24 +295,20 @@ export default function Footer() {
             <ul className="flex flex-col gap-3.5">
               {serviceLinks.map(({ label, href }) => (
                 <li key={href}>
-                  <Link href={href} className="font-semibold text-sm hover:text-white/70 transition-colors">
-                    {label}
-                  </Link>
+                  <Link href={href} className="font-semibold text-sm hover:text-white/70 transition-colors">{label}</Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Col 4 — About Us + News & Resources */}
+          {/* Col 4 — About Us + News */}
           <div className="flex flex-col gap-8">
             <div>
               <p className="text-white/50 text-sm mb-5">{f.aboutUs}</p>
               <ul className="flex flex-col gap-3.5">
                 {aboutLinks.map(({ label, href }) => (
                   <li key={href}>
-                    <Link href={href} className="font-semibold text-sm hover:text-white/70 transition-colors">
-                      {label}
-                    </Link>
+                    <Link href={href} className="font-semibold text-sm hover:text-white/70 transition-colors">{label}</Link>
                   </li>
                 ))}
               </ul>
@@ -199,9 +318,7 @@ export default function Footer() {
               <ul className="flex flex-col gap-3.5">
                 {newsLinks.map(({ label, href }) => (
                   <li key={href}>
-                    <Link href={href} className="font-semibold text-sm hover:text-white/70 transition-colors">
-                      {label}
-                    </Link>
+                    <Link href={href} className="font-semibold text-sm hover:text-white/70 transition-colors">{label}</Link>
                   </li>
                 ))}
               </ul>
@@ -232,8 +349,8 @@ export default function Footer() {
         </div>
       </Container>
 
-      {/* Bottom bar */}
-      <div className="border-t border-white/10">
+      {/* ── DESKTOP BOTTOM BAR ────────────────────────────────────── */}
+      <div className="hidden lg:block border-t border-white/10">
         <Container className="flex flex-col sm:flex-row items-center justify-between gap-3 py-5 text-sm text-white/60">
           <div className="flex items-center gap-4 flex-wrap justify-center">
             <a
@@ -251,11 +368,6 @@ export default function Footer() {
             <Link href="/privacy" className="hover:text-white transition-colors">{f.privacy}</Link>
             <span className="text-white/30">·</span>
             <Link href="/terms" className="hover:text-white transition-colors">{f.terms}</Link>
-            <span className="text-white/30">·</span>
-            <button className="flex items-center gap-1.5 hover:text-white transition-colors">
-              <GlobeIcon />
-              {f.language}
-            </button>
           </div>
           <p className="text-white/50 text-xs">{f.copyright}</p>
         </Container>

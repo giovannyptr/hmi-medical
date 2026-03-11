@@ -11,14 +11,12 @@ function MailIcon() {
 export default function CorporateEnquirySection() {
   return (
     <section className="bg-blue-50 w-full">
-      <div className="max-w-[1366px] mx-auto" style={{ paddingTop: 60, paddingBottom: 60, paddingLeft: 71, paddingRight: 71 }}>
+      <div className="max-w-[1366px] mx-auto px-5 lg:px-[71px]" style={{ paddingTop: 60, paddingBottom: 60 }}>
         <div
-          className="w-full bg-gradient-to-r from-blue-600 via-blue-400 to-emerald-400 flex flex-col justify-center gap-2"
+          className="w-full bg-gradient-to-r from-blue-600 via-blue-400 to-emerald-400 flex flex-col justify-center gap-2 px-6 lg:px-20"
           style={{
             minHeight: 200,
             borderRadius: 16,
-            paddingLeft: 80,
-            paddingRight: 80,
           }}
         >
           <h2 className="text-white font-bold text-2xl">

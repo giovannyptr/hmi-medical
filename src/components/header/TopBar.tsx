@@ -50,13 +50,13 @@ export default function TopBar() {
   }, []);
 
   const topLinks = [
-    { label: t.topbar.aboutUs, href: "/about" },
-    { label: t.topbar.news, href: "/news" },
+    { label: t.topbar.aboutUs, href: "https://www.hmimedical.com/about-hmi-medical" },
+    { label: t.topbar.news, href: "https://www.hmimedical.com/news-resources/health-tips" },
     { label: t.topbar.contact, href: "/contact" },
   ];
 
   return (
-    <div className="border-b border-gray-200 bg-white text-sm text-gray-600">
+    <div className="hidden lg:block border-b border-gray-200 bg-white text-sm text-gray-600">
       <Container className="flex items-center justify-between h-10">
         {/* Language selector */}
         <div ref={ref} className="relative">
@@ -88,7 +88,12 @@ export default function TopBar() {
         {/* Right links + search */}
         <div className="flex items-center gap-6">
           {topLinks.map(({ label, href }) => (
-            <Link key={href} href={href} className="hover:text-gray-900 transition-colors">
+            <Link
+              key={href}
+              href={href}
+              className="hover:text-gray-900 transition-colors"
+              {...(href.startsWith("https://") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+            >
               {label}
             </Link>
           ))}

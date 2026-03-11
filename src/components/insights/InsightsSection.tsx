@@ -164,7 +164,9 @@ export default function InsightsSection({ news }: { news?: NewsItem[] }) {
         {/* View more button */}
         <div className="flex justify-center mt-10">
           <Link
-            href="/news"
+            href="https://www.hmimedical.com/news-resources/health-tips"
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center gap-3 rounded-full bg-blue-700 text-white font-semibold px-8 py-3.5 hover:bg-blue-800 transition-colors"
           >
             View more

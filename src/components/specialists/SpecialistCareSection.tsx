@@ -23,9 +23,9 @@ export default function SpecialistCareSection() {
   const s = t.specialists;
 
   const specialists = [
-    { title: s.colonTitle, description: s.colonDesc, image: "/images/specialists/colon-health.png", href: "/services/colon-health" },
-    { title: s.urologyTitle, description: s.urologyDesc, image: "/images/specialists/urology.png", href: "/services/urology" },
-    { title: s.skinTitle, description: s.skinDesc, image: "/images/specialists/skin-health.png", href: "/services/skin-health" },
+    { title: s.colonTitle, description: s.colonDesc, image: "/images/specialists/colon-health.png",href:"/specialty-care" },
+    { title: s.urologyTitle, description: s.urologyDesc, image: "/images/specialists/urology.png", href: "/specialty-care" },
+    { title: s.skinTitle, description: s.skinDesc, image: "/images/specialists/skin-health.png", href: "/specialty-care" },
   ];
 
   const trackRef = useRef<HTMLDivElement>(null);
@@ -89,7 +89,7 @@ export default function SpecialistCareSection() {
           {s.body}
         </p>
         <Link
-          href="/doctors"
+          href="/specialty-care"
           className="inline-flex items-center gap-2 font-bold text-[#333] hover:text-[#0047ab] transition-colors group"
         >
           {s.cta}
@@ -118,7 +118,7 @@ export default function SpecialistCareSection() {
                   />
                 </div>
                 {/* Content */}
-                <Link href={s.href} className="group inline-flex items-center gap-2 mb-3">
+                <Link href="/specialty-care" className="group inline-flex items-center gap-2 mb-3">
                     <h3 className="text-xl font-bold text-[#333] group-hover:text-[#0047ab] transition-colors">
                         {s.title}
                     </h3>

@@ -13,7 +13,7 @@ const slides = [
     heading: "HMI Cares for All\nSingaporeans",
     description:
       "The event marks the official launch of HMI Cares, our new community health initiative in honour of SG60.",
-    cta: { label: "Find out more", href: "/news" },
+    cta: { label: "Find out more", href: "/health-screening" },
     // Replace with your real image path inside /public
     image: "/images/hero.png",
     slideLabel: "HMI Cares for all Singaporeans",
@@ -23,7 +23,7 @@ const slides = [
     heading: "25 Years\nof Care",
     description:
       "Celebrating 25 years of delivering trusted, compassionate healthcare to communities across the region.",
-    cta: { label: "Find out more", href: "/about" },
+    cta: { label: "Find out more", href: "/health-screening" },
     image: "/images/hero2.jpg",
     slideLabel: "25 Years of Care",
   },
@@ -32,7 +32,7 @@ const slides = [
     heading: "40 Years of\nTotal Defence",
     description:
       "HMI Medical proudly marks 40 years of commitment to national resilience and community health.",
-    cta: { label: "Find out more", href: "/about" },
+    cta: { label: "Find out more", href: "/health-screening" },
     image: "/images/hero3.png",
     slideLabel: "40 years of Total Defence",
   },

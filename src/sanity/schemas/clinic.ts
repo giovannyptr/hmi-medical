@@ -36,6 +36,28 @@ export const clinic = defineType({
       type: "string",
     }),
     defineField({
+      name: "whatsapp",
+      title: "WhatsApp Number",
+      type: "string",
+      description: "e.g. +65 9655 2101",
+    }),
+    defineField({
+      name: "generalEmail",
+      title: "General Enquiries Email",
+      type: "string",
+    }),
+    defineField({
+      name: "feedbackEmail",
+      title: "Feedback Email",
+      type: "string",
+    }),
+    defineField({
+      name: "mapsEmbedUrl",
+      title: "Google Maps Embed URL",
+      type: "url",
+      description: "The full src URL from a Google Maps embed iframe",
+    }),
+    defineField({
       name: "openingHours",
       title: "Opening Hours",
       type: "array",
@@ -57,7 +79,7 @@ export const clinic = defineType({
       name: "order",
       title: "Display Order",
       type: "number",
-      description: "Lower number = shown first",
+      description: "Lower number = shown first. Set to 1 for the main clinic.",
     }),
   ],
   orderings: [

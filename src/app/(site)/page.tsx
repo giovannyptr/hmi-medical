@@ -4,18 +4,22 @@ import MedicalSpecialtiesSection from "@/components/specialties/MedicalSpecialti
 import SpecialistCareSection from "@/components/specialists/SpecialistCareSection";
 import InsightsSection from "@/components/insights/InsightsSection";
 import CorporateEnquirySection from "@/components/corporate/CorporateEnquirySection";
-import { getNews } from "@/sanity/queries";
+import { getMedicalSpecialties, getSpecialists, getNews } from "@/sanity/queries";
 
 export default async function Home() {
-  const news = await getNews();
+  const [specialties, specialists, news] = await Promise.all([
+    getMedicalSpecialties(),
+    getSpecialists(),
+    getNews(),
+  ]);
 
   return (
     <main>
       <HeroSection />
       <FindUsSection />
-      <MedicalSpecialtiesSection />
-      <SpecialistCareSection />
-      <InsightsSection news={news} />
+      <MedicalSpecialtiesSection specialties={specialties ?? []} />
+      <SpecialistCareSection specialists={specialists ?? []} />
+      <InsightsSection news={news ?? []} />
       <CorporateEnquirySection />
     </main>
   );

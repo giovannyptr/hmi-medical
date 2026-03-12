@@ -14,7 +14,6 @@ const slides = [
     description:
       "The event marks the official launch of HMI Cares, our new community health initiative in honour of SG60.",
     cta: { label: "Find out more", href: "/health-screening" },
-    // Replace with your real image path inside /public
     image: "/images/hero.png",
     slideLabel: "HMI Cares for all Singaporeans",
   },

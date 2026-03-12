@@ -1,16 +1,19 @@
 import SpecialtyCareHeroSection from "@/components/specialty-care/SpecialtyCareHeroSection";
 import ServiceEnquirySection from "@/components/services/ServiceEnquirySection";
 import MedicalSpecialtiesSection from "@/components/specialties/MedicalSpecialtiesSection";
+import { getMedicalSpecialties } from "@/sanity/queries";
 
 export const metadata = {
   title: "Specialty Care | HMI Medical",
 };
 
-export default function SpecialtyCarePage() {
+export default async function SpecialtyCarePage() {
+  const specialties = await getMedicalSpecialties();
+
   return (
     <main>
       <SpecialtyCareHeroSection />
-      <MedicalSpecialtiesSection />
+      <MedicalSpecialtiesSection specialties={specialties ?? []} />
       <ServiceEnquirySection />
     </main>
   );

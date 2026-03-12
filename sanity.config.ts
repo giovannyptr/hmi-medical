@@ -5,6 +5,9 @@ import { visionTool } from "@sanity/vision";
 import { doctor } from "./src/sanity/schemas/doctor";
 import { clinic } from "./src/sanity/schemas/clinic";
 import { healthScreeningPackage } from "./src/sanity/schemas/healthScreeningPackage";
+import { medicalSpecialty } from "./src/sanity/schemas/medicalSpecialty";
+import { specialist } from "./src/sanity/schemas/specialist";
+import { news } from "./src/sanity/schemas/news";
 
 export default defineConfig({
   name: "hmi-medical",
@@ -23,12 +26,15 @@ export default defineConfig({
             S.documentTypeListItem("doctor").title("Doctors"),
             S.documentTypeListItem("clinic").title("Clinics"),
             S.documentTypeListItem("healthScreeningPackage").title("Health Screening Packages"),
+            S.documentTypeListItem("medicalSpecialty").title("Medical Specialties"),
+            S.documentTypeListItem("specialist").title("Specialist Cards"),
+            S.documentTypeListItem("news").title("News & Insights"),
           ]),
     }),
     visionTool(),
   ],
 
   schema: {
-    types: [doctor, clinic, healthScreeningPackage],
+    types: [doctor, clinic, healthScreeningPackage, medicalSpecialty, specialist, news],
   },
 });

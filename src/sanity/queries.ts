@@ -1,9 +1,5 @@
 import { client } from "./client";
 
-export async function getHero() {
-  return client.fetch(`*[_type == "hero"][0]`);
-}
-
 export async function getDoctors() {
   return client.fetch(`*[_type == "doctor"] | order(name asc) {
     _id,
@@ -45,15 +41,6 @@ export async function getClinics() {
   }`);
 }
 
-export async function getServices() {
-  return client.fetch(`*[_type == "service"] | order(title asc) {
-    _id,
-    title,
-    description,
-    icon
-  }`);
-}
-
 export async function getHealthScreeningPackages() {
   return client.fetch(`*[_type == "healthScreeningPackage"] | order(order asc) {
     _id,
@@ -73,4 +60,58 @@ export async function getNews() {
     publishedAt,
     "imageUrl": image.asset->url
   }`);
+}
+
+export async function getNewsArticle(slug: string) {
+  return client.fetch(`*[_type == "news" && slug.current == $slug][0] {
+    _id,
+    title,
+    "slug": slug.current,
+    excerpt,
+    publishedAt,
+    "imageUrl": image.asset->url,
+    body
+  }`, { slug });
+}
+
+export async function getMedicalSpecialties() {
+  return client.fetch(`*[_type == "medicalSpecialty"] | order(order asc, title asc) {
+    _id,
+    title,
+    "slug": slug.current,
+    description,
+    "iconUrl": icon.asset->url
+  }`);
+}
+
+export async function getMedicalSpecialty(slug: string) {
+  return client.fetch(`*[_type == "medicalSpecialty" && slug.current == $slug][0] {
+    _id,
+    title,
+    "slug": slug.current,
+    description,
+    "iconUrl": icon.asset->url,
+    body
+  }`, { slug });
+}
+
+export async function getSpecialists() {
+  return client.fetch(`*[_type == "specialist"] | order(order asc, title asc) {
+    _id,
+    title,
+    "slug": slug.current,
+    description,
+    "imageUrl": image.asset->url
+  }`);
+}
+
+export async function getSpecialist(slug: string) {
+  return client.fetch(`*[_type == "specialist" && slug.current == $slug][0] {
+    _id,
+    title,
+    "slug": slug.current,
+    description,
+    "imageUrl": image.asset->url,
+    body
+  }`, { slug });
 }

@@ -18,15 +18,17 @@ const ArrowRight = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
 );
 
-export default function SpecialistCareSection() {
+export type SpecialistItem = {
+  _id: string;
+  title: string;
+  slug?: string;
+  description?: string;
+  imageUrl?: string;
+};
+
+export default function SpecialistCareSection({ specialists }: { specialists: SpecialistItem[] }) {
   const { t } = useTranslation();
   const s = t.specialists;
-
-  const specialists = [
-    { title: s.colonTitle, description: s.colonDesc, image: "/images/specialists/colon-health.png",href:"/specialty-care" },
-    { title: s.urologyTitle, description: s.urologyDesc, image: "/images/specialists/urology.png", href: "/specialty-care" },
-    { title: s.skinTitle, description: s.skinDesc, image: "/images/specialists/skin-health.png", href: "/specialty-care" },
-  ];
 
   const trackRef = useRef<HTMLDivElement>(null);
   const [atStart, setAtStart] = useState(true);
@@ -51,6 +53,8 @@ export default function SpecialistCareSection() {
     window.addEventListener('resize', updateBounds);
     return () => window.removeEventListener('resize', updateBounds);
   }, [updateBounds]);
+
+  if (!specialists || specialists.length === 0) return null;
 
   return (
     <section className="bg-white py-20 overflow-hidden relative">
@@ -106,27 +110,31 @@ export default function SpecialistCareSection() {
             onScroll={updateBounds}
             className="flex gap-6 overflow-x-auto snap-x snap-mandatory no-scrollbar pb-4"
           >
-            {specialists.map((s, i) => (
-              <div key={i} className="min-w-[350px] md:min-w-[390px] snap-start">
+            {specialists.map((spec, i) => (
+              <div key={spec._id ?? i} className="min-w-[350px] md:min-w-[390px] snap-start">
                 {/* Image */}
                 <div className="relative h-[450px] w-full mb-6 rounded-xl overflow-hidden shadow-sm">
-                   <Image
-                    src={s.image}
-                    alt={s.title}
-                    fill
-                    className="object-cover"
-                  />
+                  {spec.imageUrl && (
+                    <Image
+                      src={spec.imageUrl}
+                      alt={spec.title}
+                      fill
+                      className="object-cover"
+                    />
+                  )}
                 </div>
                 {/* Content */}
-                <Link href="/specialty-care" className="group inline-flex items-center gap-2 mb-3">
+                <Link href={spec.slug ? `/specialists/${spec.slug}` : "/specialty-care"} className="group inline-flex items-center gap-2 mb-3">
                     <h3 className="text-xl font-bold text-[#333] group-hover:text-[#0047ab] transition-colors">
-                        {s.title}
+                        {spec.title}
                     </h3>
                     <ArrowRight />
                 </Link>
-                <p className="text-[#666] text-sm leading-relaxed max-w-[90%]">
-                  {s.description}
-                </p>
+                {spec.description && (
+                  <p className="text-[#666] text-sm leading-relaxed max-w-[90%]">
+                    {spec.description}
+                  </p>
+                )}
               </div>
             ))}
           </div>
